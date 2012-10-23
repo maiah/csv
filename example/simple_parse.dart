@@ -7,7 +7,7 @@ void main() {
       James,23,"MNL, PH",Red,PS
       ''';
 
-  List<List<String>> csv = parseCsv(csvContent);
+  List<List<String>> csv = parseCsvContent(csvContent);
 
   for (List<String> row in csv) {
     for (String col in row) {

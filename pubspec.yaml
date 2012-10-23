@@ -1,5 +1,5 @@
 name:  csv
-description:  A sample application
+description: CSV file parser for Dart.
 
 dependencies:
   unittest: { sdk: unittest }

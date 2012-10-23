@@ -1,9 +1,28 @@
 library csv;
 
+import 'dart:io';
+
+void parseCsvFile(File csvFile, void callback(List<List<String>> csv)) {
+  InputStream inputStream = csvFile.openInputStream();
+  String csvContent = '';
+
+  inputStream.onError = (e) => throw e;
+
+  inputStream.onData = () {
+    List<int> bytes = inputStream.read();
+    String dataString = new String.fromCharCodes(bytes);
+    csvContent = '$csvContent$dataString';
+  };
+
+  inputStream.onClosed = () {
+    callback(parseCsvContent(csvContent));
+  };
+}
+
 /**
  * Parses the csvFileContent.
  */
-List<List<String>> parseCsv(String csvFileContent) {
+List<List<String>> parseCsvContent(String csvFileContent) {
   List<List<String>> csv = new List<List<String>>();
   List<String> csvContentSplitted = csvFileContent.trim().split('\n');
   for (String contentSplitted in csvContentSplitted) {
