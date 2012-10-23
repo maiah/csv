@@ -1,7 +1,7 @@
 csv
 ===
 
-CSV parser for Dart.
+CSV file/content parser for Dart.
 
 Sample usage
 ============
