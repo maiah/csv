@@ -12,6 +12,4 @@ void main() {
       }
     }
   });
-
-  print('yea');
 }
