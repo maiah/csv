@@ -2,7 +2,8 @@ library csv;
 
 import 'dart:io';
 
-void parseCsvFile(File csvFile, void callback(List<List<String>> csv)) {
+Future<List<List<String>>> parseCsvFile(File csvFile) {
+  Completer completer = new Completer();
   InputStream inputStream = csvFile.openInputStream();
   String csvContent = '';
 
@@ -15,8 +16,10 @@ void parseCsvFile(File csvFile, void callback(List<List<String>> csv)) {
   };
 
   inputStream.onClosed = () {
-    callback(parseCsvContent(csvContent));
+    completer.complete(parseCsvContent(csvContent));
   };
+
+  return completer.future;
 }
 
 /**
