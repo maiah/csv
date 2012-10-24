@@ -2,6 +2,10 @@ library csv;
 
 import 'dart:io';
 
+/**
+ * Parses the given `csvFile` and return a `Future<List<List<String>>>` that
+ * can be use conveniently to read the contents of the file.
+ */
 Future<List<List<String>>> parseCsvFile(File csvFile) {
   Completer completer = new Completer();
   InputStream inputStream = csvFile.openInputStream();
@@ -63,4 +67,31 @@ List<List<String>> parseCsvContent(String csvFileContent) {
   }
 
   return csv;
+}
+
+/**
+ * Writes the `csvFileContent` to `csvFile`.
+ */
+void writeCsvContentToFile(File csvFile, List<List<String>> csvFileContent, [bool overwrite = true]) {
+  FileMode fileMode = FileMode.WRITE;
+  if (!overwrite) {
+    fileMode = FileMode.APPEND;
+  }
+
+  OutputStream os = csvFile.openOutputStream(fileMode);
+
+  for (List<String> row in csvFileContent) {
+    for (int i = 0; i < row.length; i++) {
+      String column = row[i];
+
+      if (i > 0) {
+        os.writeString(',');
+      }
+
+      os.writeString(column);
+    }
+    os.writeString('\n');
+  }
+
+  os.close();
 }
