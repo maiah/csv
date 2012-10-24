@@ -30,7 +30,7 @@ void main() {
 
 ### Writing CSV File
 
-Use `writeCsvContentToFile` method to create a CSV file from `List<List<String>>` object.
+Use `writeCsvFile` method to create a CSV file from `List<List<String>>` object.
 
 ```dart
 import '../lib/csv.dart';
@@ -65,6 +65,6 @@ void main() {
   csvFileContent.add(row2);
   csvFileContent.add(row3);
 
-  writeCsvContentToFile(csvFile, csvFileContent);
+  writeCsvFile(csvFile, csvFileContent);
 }
 ```
