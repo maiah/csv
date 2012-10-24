@@ -30,5 +30,5 @@ void main() {
   csvFileContent.add(row2);
   csvFileContent.add(row3);
 
-  writeCsvContentToFile(csvFile, csvFileContent);
+  writeCsvFile(csvFile, csvFileContent);
 }

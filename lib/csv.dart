@@ -72,7 +72,7 @@ List<List<String>> parseCsvContent(String csvFileContent) {
 /**
  * Writes the `csvFileContent` to `csvFile`.
  */
-void writeCsvContentToFile(File csvFile, List<List<String>> csvFileContent, [bool overwrite = true]) {
+void writeCsvFile(File csvFile, List<List<String>> csvFileContent, [bool overwrite = true]) {
   FileMode fileMode = FileMode.WRITE;
   if (!overwrite) {
     fileMode = FileMode.APPEND;
