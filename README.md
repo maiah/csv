@@ -33,7 +33,7 @@ void main() {
 Use `writeCsvFile` method to create a CSV file from `List<List<String>>` object.
 
 ```dart
-import '../lib/csv.dart';
+import 'package:csv/csv.dart';
 import 'dart:io';
 
 void main() {
