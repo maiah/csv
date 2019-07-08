@@ -1,27 +1,25 @@
 library csv;
 
 import 'dart:io';
+import 'dart:async';
 
 /**
  * Parses the given `csvFile` and return a `Future<List<List<String>>>` that
  * can be use conveniently to read the contents of the file.
  */
 Future<List<List<String>>> parseCsvFile(File csvFile) {
-  Completer completer = new Completer();
-  InputStream inputStream = csvFile.openInputStream();
+  Completer<List<List<String>>> completer = new Completer<List<List<String>>>();
+  Future<RandomAccessFile> inputStream = csvFile.open();
   String csvContent = '';
 
-  inputStream.onError = (e) => throw e;
+  inputStream.catchError((e) => throw e);
 
-  inputStream.onData = () {
-    List<int> bytes = inputStream.read();
+  inputStream.then((RandomAccessFile file) {
+    List<int> bytes = file.readSync(file.lengthSync());
     String dataString = new String.fromCharCodes(bytes);
     csvContent = '$csvContent$dataString';
-  };
-
-  inputStream.onClosed = () {
     completer.complete(parseCsvContent(csvContent));
-  };
+  });
 
   return completer.future;
 }
@@ -37,7 +35,7 @@ List<List<String>> parseCsvContent(String csvFileContent) {
     String column = '';
     bool foundDoubleQuote = false;
     List<String> columns = new List<String>();
-    List<String> chars = contentSplitted.trim().splitChars();
+    List<String> chars = contentSplitted.trim().split('');
     for (String c in chars) {
       if (c != ',' && c != '"') {
         column = '$column$c';
@@ -73,24 +71,24 @@ List<List<String>> parseCsvContent(String csvFileContent) {
  * Writes the `csvFileContent` to `csvFile`.
  */
 void writeCsvFile(File csvFile, List<List<String>> csvFileContent, [bool overwrite = true]) {
-  FileMode fileMode = FileMode.WRITE;
+  FileMode fileMode = FileMode.write;
   if (!overwrite) {
-    fileMode = FileMode.APPEND;
+    fileMode = FileMode.append;
   }
 
-  OutputStream os = csvFile.openOutputStream(fileMode);
+  RandomAccessFile os = csvFile.openSync(mode: fileMode);
 
   for (List<String> row in csvFileContent) {
     for (int i = 0; i < row.length; i++) {
       String column = row[i];
 
       if (i > 0) {
-        os.writeString(',');
+        os.writeStringSync(',');
       }
 
-      os.writeString(column);
+      os.writeStringSync(column);
     }
-    os.writeString('\n');
+    os.writeStringSync('\n');
   }
 
   os.close();
