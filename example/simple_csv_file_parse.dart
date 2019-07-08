@@ -2,7 +2,7 @@ import '../lib/csv.dart';
 import 'dart:io';
 
 void main() {
-  File csvFile = new File('D:\\tools\\flights\\csv\\example\\sample.csv');
+  File csvFile = new File('D:\\Github\\csv\\example\\sample.csv');
 
   Future<List<List<String>>> f = parseCsvFile(csvFile);
   f.then((List<List<String>> csv) {

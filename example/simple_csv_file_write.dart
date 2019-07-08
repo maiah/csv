@@ -2,7 +2,7 @@ import '../lib/csv.dart';
 import 'dart:io';
 
 void main() {
-  File csvFile = new File('D:\\tools\\flights\\csv\\example\\sample_write.csv');
+  File csvFile = new File('D:\\Github\\csv\\example\\sample_write.csv');
 
   List<List<String>> csvFileContent = new List<List<String>>();
   List<String> row1 = new List<String>();
